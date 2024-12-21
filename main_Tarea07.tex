@@ -1,0 +1,1048 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IE-0313 ELECTRÓNICA I
+% PERÍODO: II-2021
+% TAREA #7
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%--------------------------------------------------------------------------------
+%	PAQUETES Y CONFIGURACIÓN DEL DOCUMENTO
+%-------------------------------------------------------------------------------
+
+\documentclass[12pt,a4paper]{article}
+% Importando Librerias Utiles
+\usepackage{amsfonts,amssymb,array,multirow,tabularx,graphicx,amsmath,float,ltablex,longtable,listings,makecell,geometry,caption,subcaption,ulem,circuitikz,siunitx,subcaption}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{enumerate}
+\usepackage[utf8]{inputenc}
+\usetikzlibrary{babel}
+\usepackage{xcolor}
+\usepackage{attachfile}
+\author{| Sixto Loría Villagra || C04417 | \\\ \ }
+\geometry{letterpaper,left=1.5cm,right=1.5cm}
+
+\usepackage{wrapfig} % imagenes a la par de texto
+
+\usepackage[utf8]{inputenc}                   % Para escribir tildes y eñes
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=black,citecolor=black]{hyperref}          % Para insertar hipervínculos y marcadores
+\usepackage{multicol}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{amsmath}
+
+
+% =========== Estilos de Encabezado y pie de pagina =================
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}   % borra el estilo predeterminado 
+\fancyhead[LE,RO]{Tarea 07}
+\fancyhead[RE,LO]{IE-0313 Electrónica I}
+\fancyfoot[LE,LO]{II-2021}
+\fancyfoot[LE,RO]{Página \thepage \ de 15}
+
+% Tamaño de la linea
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+
+%--------------------------------------------------------------------------------
+%	COMANDOS PROPIOS
+%--------------------------------------------------------------------------------
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+
+%%%%%%%%%%%%%%%%%%% Portada %%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\begin{titlepage}
+\centering
+
+	    \begin{figure}[h!]
+        \centering
+        \includegraphics[scale=0.272]{UCR.png}
+        \end{figure}
+
+{\bfseries\LARGE Universidad de Costa Rica - Sede de  \par}
+{\bfseries\LARGE  Guanacaste \par}
+\vspace{1cm}
+{\bfseries\Large IE-0313 Electrónica I \par}
+\vspace{1cm}
+{\bfseries\Large Tarea 07 \par}
+\vspace{1cm}
+{\bfseries\Large Estudiante:  \par}
+{\bfseries\Large | Sixto Loría Villagra  \qquad   C04417 | \\\ \ \par}
+\vspace{1cm}
+{\bfseries\Large Profesor: \par}
+{\bfseries\Large  Dr. Alejandro Delgado Castro.  \par}
+\vfill
+{\bfseries\Large Segundo Semestre del 2021 \par}
+\vspace{2cm}
+{\bfseries\large  29 de noviembre de 2021  \par}
+\end{titlepage}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Documento %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Ejercicio 1}
+En el circuito que se muestra a continuación se tiene un transistor PNP en configuración de divisor de tensión, donde $\beta = 180$. Asuma que $r_o$ es muy alta. Determine lo siguiente:
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+			\draw (0,0) to[short,o-] (0,-0.5)
+						to[short] (1.5,-0.5)
+						to[short] (1.5,-3)
+						to[Tpnp,invert,n=Q1] (1.5,-5)
+						to[short] (1.5,-5.2)
+						to[R,l=$\begin{array}{c} R_C \\ \SI{150}{\ohm}\end{array}$] (1.5,-8.5) % RE
+						to[short] (0,-8.5)
+						to[short,-o] (0,-9);
+			\draw (0,-0.5)to[short,*-] (-1.5,-0.5)
+						to[R,l_=$\begin{array}{c} R_1 \\ \SI{47}{\kilo\ohm}\end{array}$] (-1.5,-4) % R1
+						to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-1.5,-8.5) % R2
+						to[short,-*] (0,-8.5);
+			\draw (-1.5,-4)	to[short,*-] (Q1.B);
+			\draw (-5,-4) to[pC,invert,l=$C_1$] (-1.5,-4); % C1
+			\draw (1.5,-5.2) to[pC,invert,l=$C_2$,*-] (7,-5.2); % C2
+			\draw (-5,-4) to[vR,l_=$R_s$,a^=\SI{100}{\ohm}] (-8,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-8,-7); % Vs
+			\draw (7,-5.2) to[R,l=$\begin{array}{c} R_L \\ \SI{10}{\kilo\ohm}\end{array}$] (7,-8); % RL
+			\draw (0,0) node[anchor=south]{$+\SI{9}{\volt}$};
+			\draw (0,-9) node[anchor=north]{$-\SI{9}{\volt}$};
+			\draw (6.5,-5.2) to [open,v=$V_{o}$] (6.5,-8);
+			\draw (-8,-7) node [ground] {};
+			\draw (7,-8) node [ground] {};
+		\end{circuitikz}
+	\end{center}
+	\label{fig:Circuito01}
+\end{figure}
+
+\begin{enumerate}[(a)]
+	\item El punto de operación del transistor.
+	\item El circuito equivalente en corriente alterna (sin sustituir el transistor por su modelo equivalente).
+	\item El circuito equivalente en corriente alterna (sustituyendo el transistor por su modelo equivalente de parámetros r). Preste especial atención a las direcciones de las corrientes (transistor \emph{pnp}).
+	\item Las impedancias de entrada y de salida del amplificador (para calcular $Z_o$, asuma que $V_s$ = \SI{0}{\volt}).
+	\item La ganancia de tensión $A_{v_s}$ del amplificador.
+\end{enumerate}
+
+
+\newpage
+\subsection*{Procedimiento}
+
+
+\begin{enumerate}[(1)]
+
+\item \textbf{Análisis en corriente directa.}
+
+\begin{itemize}
+    \item Debido a que en corriente directa la frecuencia es cero, se sustituyen los capacitores por circuitos abiertos. 
+\end{itemize}
+
+\vspace{0.1cm}
+Para el análisis en corriente directa se tendría el siguiente circuito.
+
+\begin{figure}[H]
+		\begin{center}
+			\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+				\draw (0,0) to[short,o-] (0,-1)
+							to[short] (0,-2.5) 
+							to[short] (0,-3)
+							to[Tpnp,invert,n=Q1] (0,-4)
+							to[R,l=$\begin{array}{c} R_C \\ \SI{150}{\ohm}\end{array}$] (0,-6) % RC
+							to[short,-o] (0,-7.1);
+				\draw (0,-0.5)to[short,*-] (-3,-0.5)
+							to[R,l_=$\begin{array}{c} R_1 \\ \SI{47}{\kilo\ohm}\end{array}$] (-3,-3.5) % R1
+							to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-3,-6.5) % R2
+							to[short,-*] (0,-6.5);
+				\draw (-3,-3.5)to[short,*-] (Q1.B);
+				\draw (0,0) node[anchor=south]{$V_{EE} = +\SI{9}{\volt}$};
+				\draw (0,-7.1) node[anchor=north]{$V_{CC} = -\SI{9}{\volt}$};
+			\end{circuitikz}
+		\end{center}
+\end{figure}
+
+Muy bien, ahora que tengo la representación del circuito en corriente directa procedo encontrar el equivalente de Thevenin, para simplificar el circuito por el modelo de polarización en emisor común. Por lo tanto separaré el circuito a la mitad y trabajaré solo con la parte izquierda.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+		
+			\draw (-6,-3.5)to[R,l=$R_1$,a=\SI{47}{\kilo\ohm},-*] (-2,-3.5) % R1
+			to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-2,-6); % R2
+			\draw (-2,-3.5)to[short] (0,-3.5);
+
+			
+            \draw (-2,-6) to[V,invert,l=$\begin{array}{c}  \\ \SI{9}{\volt} \end{array}$] (-2,-7);
+			
+			\draw (-6,-7) to[V,invert,l=$\begin{array}{c}  \\ \SI{9}{\volt} \end{array}$] (-6,-3.5);
+			
+			\draw (0,-3.5) to[open,v=$V_{BB}$] (0,-6);
+			\draw (0,-7) node [ground] {};
+			\draw (-6,-7) node [ground] {};
+			\draw (-2,-7) node [ground] {};
+			
+			\draw[thick, <-] (-4,-6)node{$I_{1}$}  ++(-60:0.5) arc (-60:170:0.5);  % IM1			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Ahora para encontrar el valor de la tensión $V_{BB}$, necesito primero encontrar el valor de la tensión en la resistencia $R_2$, debido a que el valor de $V_{BB}$ es la suma algebraica de $V_{R2}$ y la fuente de 9V. Por lo tanto procedo a encontrar dichos valores.
+
+\vspace{0.3cm}
+Aplicando LTK en la malla 1.
+
+\begin{equation*}
+    -9 + R_1 \cdot  I_1 + R_2 \cdot I_1 -9 = 0 
+\end{equation*}
+\begin{equation*}
+    R_1 I_1 + R_2 I_1 = 18
+\end{equation*}
+\begin{equation*}
+    I_1 = \frac{18}{R_1 + R_2} 
+\end{equation*}
+\begin{equation*}
+    I_1 = \SI{0.202}{m A} 
+\end{equation*}
+
+Aplicando ley de Ohm en $R_2$
+
+\begin{equation*}
+    V_{R2} = 42K \cdot \SI{0.202}{\milli\ampere}
+\end{equation*}
+\begin{equation*}
+    V_{R2} = \SI{8.484}{\volt}
+\end{equation*}
+
+Por lo tanto para la tensión $V_{BB}$ se tiene:
+
+\begin{equation*}
+    V_{BB} = \SI{8.484}{\volt} - 9V
+\end{equation*}
+\begin{equation*}
+    V_{BB} = \fbox{\SI{-0.516}{\volt}}
+\end{equation*}
+
+Para encontrar el valor de la resistencia de Thevenin se apagan las fuentes independientes y se reduce el circuito.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+		
+			\draw (-6,-3.5)to[R,l=$R_1$,a=\SI{47}{\kilo\ohm},-*] (-2,-3.5) % R1
+			to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-2,-7); % R2
+			\draw (-2,-3.5)to[short] (0,-3.5);
+
+			
+			
+			\draw (-6,-7) to[short] (-6,-3.5);
+			
+			\draw (0,-3.5) to[open,v=$V_{BB}$] (0,-6);
+			\draw (0,-7) node [ground] {};
+			\draw (-6,-7) node [ground] {};
+			\draw (-2,-7) node [ground] {};
+			
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+Se puede apreciar que $R_1$ y  $R_2$ están en paralelo, por lo que procedo a resolver el paralelo entre ellos.
+
+\begin{equation*}
+    R_{TH} = R_{B}
+\end{equation*}
+\begin{equation*}
+    R_B = \frac{47K \cdot 42K}{47K + 42K}
+\end{equation*}
+\begin{equation*}
+   \fbox{ R_B = \SI{22}{K\ohm}}
+\end{equation*}
+
+Con estos valores puedo representar el circuito de polarización de emisor común del transistor PNP.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+		
+		\draw (-7,-7) to[V,l=$\begin{array}{c} V_{BB} \\ \SI{0.516}{\volt} \end{array}$] (-7,-3);
+		
+		\draw (-7,-3) to[R,l=$R_B$,a=\SI{22}{K\ohm}] (-3,-3);
+		
+		\draw (-1,-2) to[short] (-2,-2);
+		\draw (-2,-2)  to[Tpnp,invert,n=Q1] (-2,-4);
+		\draw (-3,-3)to[short] (Q1.B);
+		
+		\draw (-1,-2) to[short] (2,-2);
+		\draw (2,-2) to[V,l=$\begin{array}{c} V_{EE} \\ \SI{9}{\volt} \end{array}$] (2,-5);
+		
+		\draw (-2,-4) to[R,l=$R_C$,a=\SI{150}{\ohm}] (-2,-5);
+		\draw (-2,-5) to[V,l=$\begin{array}{c} V_{CC} \\ \SI{9}{\volt} \end{array}$] (-2,-7);
+		
+		
+		\draw (-3.7,-2.5) to[open,v<=$V_{BE}$] (-2,-1.5);
+		\draw (-1.3,-2.4) to[open,v=$V_{CE}$] (-1.3,-3.9);
+		\draw (-7,-7) node [ground] {};
+		\draw (-2,-7) node [ground] {};
+		\draw (2,-5) node [ground] {};
+		
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Ahora procedo a encontrar el valor de la corriente de base, para ello usaré la trayectoria exterior del circuito.
+
+\vspace{0.2cm}
+Aplicando LTK en la trayectoria externa.
+
+\begin{equation*}
+    0.516 - R_B \cdot I_B - V_{BE} + 9 = 0
+\end{equation*}
+\begin{equation*}
+     - 22K \cdot I_B  = -0.516 + 0.7 - 9
+\end{equation*}
+\begin{equation*}
+    I_B = \frac{-8.816}{-22K}
+\end{equation*}
+\begin{equation*}
+   \fbox{ I_B = \SI{0.4}{\milli\ampere}}
+\end{equation*}
+
+Puedo encontrar el valor de la corriente de colector $I_C$ utilizando la relación entre la corriente de base, beta y la corriente de colector.
+
+\begin{equation*}
+    I_C = \beta \cdot I_B
+\end{equation*}
+\begin{equation*}
+    I_C = 180 \cdot \SI{0.4}{\milli\ampere}
+\end{equation*}
+\begin{equation*}
+   \fbox{ I_C = \SI{72}{\milli\ampere}}
+\end{equation*}
+
+Bien con la corriente de colector ya cuento con un parte del par ordenado que conforma el punto de operación del transistor, pero antes de encontrar el valor de la tensión $V_{CE}$ voy calcular el valor de la corriente de emisor, la cual será de utilidad más adelante cuando se calcule el valor de $r_e$ para el análisis en corriente alterna.
+
+\vspace{0.2cm}
+Calculado el valor de la corriente de emisor.
+
+\begin{equation*}
+    I_E = I_B + I_C
+\end{equation*}
+\begin{equation*}
+    I_E = \SI{0.4}{m\ampere} + \SI{72}{\milli\ampere}
+\end{equation*}
+\begin{equation*}
+    \fbox{ I_E = \SI{72.4}{\milli\ampere}}
+\end{equation*}
+
+\vspace{0.2cm}
+Ahora si procedo a aplicar LTK en la malla colector- emisor, para encontrar el valor de $V_{CE}$, y así obtener el valor completo del punto Q del transistor.
+
+\vspace{0.2cm}
+Aplicando LTK en la malla colector-emisor.
+
+\begin{equation*}
+    -9 + V_{CE} + R_C \cdot I_C -9 = 0
+\end{equation*}
+\begin{equation*}
+    V_{CE} = 18 - 150 \cdot \SI{72}{m\ampere}
+\end{equation*}
+\begin{equation*}
+   \fbox{ V_{CE} = \SI{7.2}{\volt}}
+\end{equation*}
+
+Por lo tanto, el punto de operación encontrado para el transistor PNP sería el siguiente:
+
+\begin{equation*}
+    \fcolorbox{red}{white}{ ( \SI{7.2}{\volt} , \SI{72}{m\ampere} ) }
+\end{equation*}
+
+
+\newpage
+\item \textbf{Análisis en corriente alterna.}
+
+\end{enumerate}
+
+
+\begin{itemize}
+    \item Se apagan todas las fuentes en corriente directa.
+    
+    \item Se asumen los capacitores como cortos circuitos.
+\end{itemize}
+
+Aplicadas estas condiciones el circuito equivalente quedaría de la siguiente forma:
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+			\draw (0,-0.5) 
+						to[short] (1.5,-0.5)
+						to[short] (1.5,-3)
+						to[Tpnp,invert,n=Q1] (1.5,-5)
+						to[short] (1.5,-5.2)
+						to[R,l=$\begin{array}{c} R_C \\ \SI{150}{\ohm}\end{array}$] (1.5,-8.5) % RC
+						to[short] (0,-8.5);
+						
+			\draw (0,-0.5)to[short,*-] (-1.5,-0.5)
+						to[R,l_=$\begin{array}{c} R_1 \\ \SI{47}{\kilo\ohm}\end{array}$] (-1.5,-4) % R1
+						to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-1.5,-8.5) % R2
+						to[short,-*] (0,-8.5);
+			\draw (-1.5,-4)	to[short,*-] (Q1.B);
+			\draw (-4,-4) to[short] (-1.5,-4); % C1
+			\draw (1.5,-5.2) to[short,*-] (7,-5.2); % C2
+			\draw (-4,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			\draw (7,-5.2) to[R,l=$\begin{array}{c} R_L \\ \SI{10}{\kilo\ohm}\end{array}$] (7,-8); % RL
+			
+			
+			\draw (0,-0.5) node[ground, rotate=180]{};
+			\draw (0,-8.5) node[ground]{};
+			\draw (6.5,-5.2) to [open,v=$V_{o}$] (6.5,-8);
+			\draw (-7,-7) node [ground] {};
+			\draw (7,-8) node [ground] {};
+		\end{circuitikz}
+	\end{center}
+	\label{fig:Circuito01}
+\end{figure}
+
+
+Muy bien, ahora con la corriente de emisor que se calculó en el análisis en corriente directa, se procede a calcular el valor de $r_e$.
+
+\begin{equation*}
+    r_e = \frac{\SI{26}{m\volt}}{I_E}
+\end{equation*}
+\begin{equation*}
+    r_e = \frac{\SI{26}{m\volt}}{\SI{72.4}{\milli\ampere}}
+\end{equation*}
+\begin{equation*}
+   \fbox{ r_e = \SI{0.36}{\ohm}}
+\end{equation*}
+
+\newpage
+Ahora se sustituirá el transistor por su modelo equivalente en parámetros r. Para el calculo de la resistencia interna del transistor, se asumirá que $\beta = \beta + 1$ y que el valor de $r_o$ es muy alto.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+			\draw (1.5,-1) 
+						
+						to[R,l_=$\begin{array}{c} r_e   \end{array}$] (1.5,-3) %Re'
+						to[short] (1.5,-5)
+						to[short] (1.5,-6.2)
+						to[R,l=$\begin{array}{c} R_C \\ \SI{150}{\ohm}\end{array}$] (1.5,-8.5); % RC
+						
+						
+			\draw (-1.5,-1)
+						to[R,l_=$\begin{array}{c} R_1 \\ \SI{47}{\kilo\ohm}\end{array}$] (-1.5,-4) % R1
+						to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-1.5,-8.5); % R2
+						
+			\draw (-1.5,-4)	to[short,*-] (1.5,-4);
+			\draw (-4,-4) to[short] (-1.5,-4); % C1
+			
+			
+			
+			\draw (1.5,-6.3) to[short,*-] (7,-6.3); % C2
+			\draw (1.5,-4.2) to[cI,l=$\beta \; I_b$] (1.5,-6.2); % controlada
+			
+			\draw (-4,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			\draw (7,-6.3) to[R,l=$\begin{array}{c} R_L \\ \SI{10}{\kilo\ohm}\end{array}$] (7,-8.4); % RL
+			
+			
+			\draw (-1.5,-1) node[ground, rotate=180]{};
+			\draw (1.5,-1) node[ground, rotate=180]{};
+			
+			\draw (1.5,-8.5) node[ground]{};
+			\draw (-1.5,-8.5) node[ground]{};
+			
+			\draw (6.5,-6.3) to [open,v=$V_{o}$] (6.5,-8.4);
+			\draw (-7,-7) node [ground] {};
+			\draw (7,-8.4) node [ground] {};
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Se puede apreciar que las resistencias $R_1$, $R_2$ y $r_e $ están en paralelo, por lo que reacomodando el circuito se puede apreciar mejor la impedancia de entrada y de salida.
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+			
+			\draw (1.5,-4) to[R,l_=$\begin{array}{c} r_e   \end{array}$] (1.5,-7); %Re'
+			
+			\draw (5,-6.3) to[R,l=$\begin{array}{c} R_C \\ \SI{150}{\ohm}\end{array}$] (5,-8.5); % RC
+						
+			    \draw (-3.5,-4)to[R,l_=$\begin{array}{c} R_1 \\ \SI{47}{\kilo\ohm}\end{array}$] (-3.5,-7); % R1
+			    
+				\draw (-1,-4)	to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-1,-7); % R2
+						
+			\draw (-1.5,-4)	to[short] (1.5,-4);
+			\draw (-4,-4) to[short] (-1.5,-4); % C1
+			
+			\draw (1.5,-4) to[short] (4,-4);
+			\draw (4,-6.3) to[short] (8,-6.3); % C2
+			\draw (4,-4) to[cI,l=$\beta \; I_b$] (4,-6.3); % controlada
+			
+			\draw (-4,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			\draw (8,-6.3) to[R,l=$\begin{array}{c} R_L \\ \SI{10}{\kilo\ohm}\end{array}$] (8,-8.4); % RL
+			
+			\draw (-3.5,-7) node[ground]{}; %R1
+			
+			
+			\draw (1.5,-7) node[ground]{};
+			\draw (-1,-7) node[ground]{}; 
+			\draw (5,-8.4) node [ground] {}; %Rc
+			\draw (7.5,-6.3) to [open,v=$V_{o}$] (7.5,-8.4);
+			\draw (-7,-7) node [ground] {}; % Vs
+			\draw (8,-8.4) node [ground] {}; %RL
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Bien, ahora para tener separada tanto la parte de entrada como la de salida voy a utilizar el modelo equivalente en pi.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+			
+			\draw (1.5,-4) to[R,l_=$\begin{array}{c} r_e \beta  \end{array}$] (1.5,-7); %Re beta
+			
+			\draw (6.5,-4) to[R,l=$\begin{array}{c} R_C \\ \SI{150}{\ohm}\end{array}$] (6.5,-7); % RC
+						
+			    \draw (-3.5,-4)to[R,l_=$\begin{array}{c} R_1 \\ \SI{47}{\kilo\ohm}\end{array}$] (-3.5,-7); % R1
+			    
+				\draw (-1,-4)	to[R,l_=$\begin{array}{c} R_2 \\ \SI{42}{\kilo\ohm}\end{array}$] (-1,-7); % R2
+						
+			\draw (-1.5,-4)	to[short] (1.5,-4); % Cable izquierda
+			\draw (-4,-4) to[short] (-1.5,-4); % C1
+			
+			
+			\draw (4,-4) to[short] (10,-4);
+			\draw (4,-4) to[cI,invert,l=$\beta \; I_b$] (4,-7); % controlada
+			
+			\draw (-4,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			\draw (10,-4) to[R,l=$\begin{array}{c} R_L \\ \SI{10}{\kilo\ohm}\end{array}$] (10,-7); % RL
+			
+			
+			% Tierras
+			\draw (-3.5,-7) node[ground]{}; %R1
+			
+			\draw (4,-7) node[ground]{}; % beta ib
+			\draw (1.5,-7) node[ground]{}; %re bta
+			\draw (-1,-7) node[ground]{};  %r2
+			\draw (6.5,-7) node [ground] {}; %Rc
+			\draw (7.5,-7) node {$\textcolor{red}{Z_{o}}$} (7.5,-8);
+			
+			\draw (-4,-7) node {$\textcolor{red}{Z_{i}}$} (-4,-8);
+			\draw (-7,-7) node [ground] {}; % Vs
+			\draw (10,-7) node [ground] {}; %RL
+			
+			
+			% Flecha de Zi
+			\draw [-, red] (-5,-7.5) -- (-5,-7);
+    	    \draw [->, red] (-5,-7) -- (-4.5,-7);
+			
+			% Flecha de Zo 
+			\draw [-, red] (8.5,-7.5) -- (8.5,-7);
+    	    \draw [->, red] (8.5,-7) -- (8,-7);
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Muy bien, ahora que tengo el circuito equivalente en pi, se me es más sencillo ver y calcular las impedancias de entrada y salida.
+
+\vspace{0.2cm}
+\textbf{Calculando impedancia de entrada.}
+
+\vspace{0.2cm}
+Se puede apreciar que $Z_i$ = $R_1$ || $R_2$ || $r_e \beta$, por lo tanto:
+
+\begin{equation*}
+    Z_i = \left ( \frac{1}{47K} + \frac{1}{42K} + \frac{1}{180 \cdot 0.36} \right )^{-1}
+\end{equation*}
+\begin{equation*}
+  \textcolor{red}{R/} \quad  \fbox{ Z_i = \SI{64.61}{\ohm}}
+\end{equation*}
+
+\textbf{Calculando impedancia de salida.}
+
+\vspace{0.2cm}
+Para la impedancia de salida como se asumió que el valor de $r_o$ es mucho mayor al de $R_C$ se tiene que la impedancia de salida es:
+
+\begin{equation*}
+    Z_o = R_C
+\end{equation*}
+\begin{equation*}
+    \textcolor{red}{R/} \quad \fbox{ Z_o = \SI{150}{\ohm}}
+\end{equation*}
+
+\vspace{0.3cm}
+\textbf{Calculando la ganancia de tensión $A_{vs}$ del amplificador}
+
+\begin{equation*}
+    A_{Vs} = \frac{V_o}{V_s} = \frac{V_i}{V_s} \cdot \frac{V_o}{V_i}
+\end{equation*}
+\begin{equation*}
+    A_{Vs} =  \frac{V_i}{V_s} \cdot  A_{VL}
+\end{equation*}
+
+Para calcular el valor de  $A_{VL}$ utilizaré la expresión demostrada en clases, solo que esta vez sin el signo negativo, debido a que la corriente ahora si ingresa por la parte de arriba de $R_C$.
+
+\begin{equation*}
+    A_{VL} = \frac{R_C || R_L}{r_e}
+\end{equation*}
+\begin{equation*}
+    A_{VL} = \left( \frac{1}{150} + \frac{1}{10K}     \right)^{-1} \cdot \frac{1}{0.36}
+\end{equation*}
+\begin{equation*}
+   \fbox{ A_{VL} = 410.51 }
+\end{equation*}
+
+Muy bien, ahora para calcular el valor de la atenuación de entrada se plantea el siguiente circuito.
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+			
+						
+			    \draw (-1.5,-4)to[R,l_=$\begin{array}{c} Z_i \end{array}$] (-1.5,-7); % R1
+			    
+			\draw (-1.5,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			
+			% Tierras
+			\draw (-1.5,-7) node[ground]{}; %R1
+			
+            \draw (-0.5,-4) to [open,v=$V_{i}$] (-0.5,-7);
+
+			\draw (-7,-7) node [ground] {}; % Vs
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Para calcular el valor de $V_i$ se puede utilizar divisor de tensión.
+
+\begin{equation*}
+    V_i = \left ( \frac{Z_i}{R_s+Z_i}  \right) V_s
+\end{equation*}
+
+Pasando a dividir el valor de $V_s$ se obtiene la expresión para calcular la atenuación de entrada, de la cual se sabe que siempre va a ser menor a uno.
+
+
+\begin{equation*}
+    \frac{V_i }{V_s} = \left ( \frac{Z_i}{R_s+Z_i}  \right) 
+\end{equation*}
+
+Sustituyendo valores conocidos.
+
+\begin{equation*}
+    \frac{V_i }{V_s} = \left ( \frac{64.61}{100+ 64.61}  \right) 
+\end{equation*}
+\begin{equation*}
+    \frac{V_i }{V_s} = 0.39
+\end{equation*}
+
+Al ver este valor de atenuación obtenida nos damos cuenta que la eficiencia de este amplificador no es muy buena pues de toda la amplificación que nos brinda $A_{VL}$ solo estaremos aprovechando el 39 \%.
+
+\vspace{0.3cm}
+Por lo tanto el valor de la la ganancia de tensión $A_{Vs}$ sería:
+
+\begin{equation*}
+  A_{Vs} =  0.39 \cdot 410.51
+\end{equation*}
+\begin{equation*}
+  \textcolor{red}{R/} \quad   \fbox{ A_{Vs} =  160.10 }
+\end{equation*}
+
+\newpage
+\section*{Ejercicio de práctica}
+
+En el circuito que se muestra a continuación se tiene un transistor PNP en configuración de base com\'{u}n, donde $\alpha \cong 1$. Asuma que $r_o$ es muy alta. Determine lo siguiente:
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+			\draw (-3,0)to[vsourcesin,l=$V_{s}$] (-3,3) % Vs
+						to[R,l=$R_s$,a=\SI{100}{\ohm}] (0,3) % Rs
+						to[pC,invert,l_=$C_1$] (1,3)
+						to[short] (4,3)
+						to[Tpnp,invert,n=Q1] (6,3) % Transistor
+						to[short] (8,3)
+						to[pC,invert,l=$C_2$,l_=$C_2$] (11,3) % RC
+						to[R,l=$\begin{array}{c} R_L \\ \SI{5.6}{\kilo\ohm}\end{array}$] (11,0); % RL
+			\draw (3,3)	to[R,l=$\begin{array}{c} R_1 \\ \SI{2.2}{\kilo\ohm}\end{array}$,*-o] (3,6); % R1
+			\draw (7,3)	to[R,l=$\begin{array}{c} R_2 \\ \SI{4.7}{\kilo\ohm}\end{array}$,*-o] (7,6); % R1
+			\draw (Q1.B)to[short] (5,0);
+			\draw (3,6) node[anchor=south]{$+\SI{6}{\volt}$};
+			\draw (7,6) node[anchor=south]{$-\SI{22}{\volt}$};
+			\draw (10.5,3) to [open,v=$V_{o}$] (10.5,0);
+			\draw (5,0) node [ground] {};
+			\draw (-3,0) node [ground] {};
+			\draw (11,0) node [ground] {};
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+\begin{enumerate}[(a)]
+	\item El punto de operación del transistor.
+	\item El circuito equivalente en corriente alterna (sin sustituir el transistor por su modelo equivalente).
+	\item El circuito equivalente en corriente alterna (sustituyendo el transistor por su modelo equivalente de parámetros r). Puede ser que la forma en T del modelo del transistor sea más conveniente que la forma en Pi.
+	\item Las impedancias de entrada y de salida del amplificador.
+	\item La ganancia de tensión $A_{v_s}$ del amplificador.
+\end{enumerate}
+
+\newpage
+\subsection*{Procedimiento}
+
+\begin{enumerate}[(1)]
+
+    \vspace{0.3cm}
+    \item \textbf{Análisis en corriente directa.}
+    
+    \begin{itemize}
+    \item Debido a que en corriente directa la frecuencia es cero, se sustituyen los capacitores por circuitos abiertos. 
+    \end{itemize}
+    
+Para el análisis en corriente directa se tendría el siguiente circuito.
+    
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+			\draw    (2,3)
+						to[short, f=$I_{E}$] (4,3)
+						to[Tpnp,invert,n=Q1] (6,3) % Transistor
+						to[short, f=$I_{C}$] (8,3);
+						 
+			\draw (2,3)	to[R,l=$\begin{array}{c} R_1 \\ \SI{2.2}{\kilo\ohm}\end{array}$] (2,1); % R1
+			
+    		\draw (2,1) to[V,l=$\begin{array}{c}  \\ \SI{6}{\volt} \end{array}$] (2,-1); % 6v	
+    		
+    		\draw (8,1) to[V,invert,l=$\begin{array}{c}  \\ \SI{22}{\volt} \end{array}$] (8,-1); % -22v
+			
+			\draw (8,3)	to[R,l=$\begin{array}{c} R_2 \\ \SI{4.7}{\kilo\ohm}\end{array}$] (8,1); % R2
+			
+			\draw (Q1.B)to[short, f=$I_{B}$] (5,-1);
+
+            
+			\draw (5,-1) node [ground] {};
+            \draw (2,-1) node [ground] {};
+            \draw (8,-1) node [ground] {};
+            
+            \draw (4,2.5) to[open,v=$V_{BE}$] (4.6,1.5);
+        
+		\end{circuitikz}
+	\end{center}
+\end{figure}    
+    
+Claramente estamos ante una configuración en base común para un transistor PNP, por lo que la resistencia $R_1$ estaría actuando como la resistencia de emisor, y la resistencia $R_2$ como la de colector.
+
+\begin{equation*}
+    R_1 = R_E
+\end{equation*}
+\begin{equation*}
+    R_2 = R_C
+\end{equation*}
+
+Puedo aplicar LTK en la malla Emisor-Base, para encontrar la corriente de emisor.
+
+\begin{equation*}
+    -6 + R_1 \cdot I_E + V_{BE} = 0
+\end{equation*}
+\begin{equation*}
+    I_E = \frac{6-0.7}{2.2K}
+\end{equation*}
+\begin{equation*}
+    I_E = \SI{2.41}{m\ampere}
+\end{equation*}
+Puedo obtener el valor de la corriente de colector mediante la expresión:
+
+\begin{equation*}
+    I_C = \alpha \cdot I_E
+\end{equation*}
+Se tiene que $\alpha \cong $ 1
+\begin{equation*}
+    I_C = 1 \cdot \SI{2.41}{m\ampere}
+\end{equation*}
+\begin{equation*}
+  \fbox{  I_C = \SI{2.41}{m\ampere} }
+\end{equation*}
+
+Si la corriente de emisor y colector son iguales, entonces la corriente de base es aproximadamente cero en este circuito.
+
+\vspace{0.2cm}
+Bien, ahora para encontrar el valor de la tensión $V_{EC}$ aplicaré LTK en la trayectoria externa.
+
+\begin{equation*}
+    -6 + R_1 \cdot I_E + V_{EC} + R_2 \cdot I_C -22 =0
+\end{equation*}
+\begin{equation*}
+    V_{EC} = 28 - R_1 \cdot I_E - R_2 \cdot I_C
+\end{equation*}
+Sustituyendo valores conocidos.
+\begin{equation*}
+    V_{EC} = 28 - 2.2K \cdot \SI{2.41}{m\ampere} - 4.7K \cdot \SI{2.41}{m\ampere}
+\end{equation*}  
+\begin{equation*}
+   \fbox{ V_{EC} = \SI{11.37}{\volt}}
+\end{equation*} 
+    
+Por lo tanto, el punto de operación encontrado para el transistor PNP sería el siguiente:
+
+\begin{equation*}
+    \fcolorbox{red}{white}{ ( \SI{11.37}{\volt} , \SI{2.41}{m\ampere} ) }
+\end{equation*}
+    
+ \item \textbf{Análisis en corriente alterna.}
+
+\end{enumerate}
+
+\begin{itemize}
+    \item Se apagan todas las fuentes en corriente directa.
+    
+    \item Se asumen los capacitores como cortos circuitos.
+\end{itemize}
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+			\draw (-3,0)to[vsourcesin,l=$V_{s}$] (-3,3) % Vs
+						to[R,l=$R_s$,a=\SI{100}{\ohm}] (0,3) % Rs
+						to[short] (1,3)
+						to[short] (4,3)
+						to[Tpnp,invert,n=Q1] (6,3) % Transistor
+						to[short] (8,3)
+						to[short] (11,3) % RC
+						to[R,l=$\begin{array}{c} R_L \\ \SI{5.6}{\kilo\ohm}\end{array}$] (11,0); % RL
+			\draw (2,3)	to[R,l=$\begin{array}{c} R_1 \\ \SI{2.2}{\kilo\ohm}\end{array}$] (2,0); % R1
+			\draw (7,3)	to[R,l=$\begin{array}{c} R_2 \\ \SI{4.7}{\kilo\ohm}\end{array}$] (7,0); % R2
+			\draw (Q1.B)to[short] (5,0);
+
+			\draw (10.5,3) to [open,v=$V_{o}$] (10.5,0);
+			\draw (5,0) node [ground] {};
+			\draw (2,0) node [ground] {};
+			\draw (7,0) node [ground] {};
+			
+			\draw (-3,0) node [ground] {};
+			\draw (11,0) node [ground] {};
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Muy bien, ahora con la corriente de emisor que se calculó en el análisis en corriente directa, se procede a calcular el valor de $r_e$.
+
+\begin{equation*}
+    r_e = \frac{\SI{26}{m\volt}}{I_E}
+\end{equation*}
+\begin{equation*}
+    r_e = \frac{\SI{26}{m\volt}}{\SI{2.41}{\milli\ampere}}
+\end{equation*}
+\begin{equation*}
+   \fbox{ r_e = \SI{10.79}{\ohm}}
+\end{equation*}
+
+Ahora se sustituirá el transistor por su modelo equivalente en parámetros r, se asumirá que el valor de $r_o$ es muy alto.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=1][americanvoltages]
+			\draw (-3,0)to[vsourcesin,l=$V_{s}$] (-3,3) % Vs
+						to[R,l=$R_s$,a=\SI{100}{\ohm}] (0,3) % Rs
+						to[short] (1,3)
+						to[R,l=$r_e$,a=\SI{100}{\ohm}] (5,3)
+						to[short] (5,3) % 
+						to[cI,l=$\beta \; I_b$] (8,3) % Controlada
+						to[short] (11,3) % RC
+						to[R,l=$\begin{array}{c} R_L \\ \SI{5.6}{\kilo\ohm}\end{array}$] (11,0); % RL
+			\draw (1,3)	to[R,l=$\begin{array}{c} R_1 \\ \SI{2.2}{\kilo\ohm}\end{array}$] (1,0); % R1
+			\draw (8,3)	to[R,l=$\begin{array}{c} R_2 \\ \SI{4.7}{\kilo\ohm}\end{array}$] (8,0); % R2
+			\draw (5,3)to[short] (5,0);
+
+
+            % Tierras
+			\draw (10.5,3) to [open,v=$V_{o}$] (10.5,0);
+			\draw (5,0) node [ground] {}; % Base
+			\draw (1,0) node [ground] {}; %R1
+			\draw (8,0) node [ground] {}; % R2
+			
+			\draw (-3,0) node [ground] {};
+			\draw (11,0) node [ground] {};
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Se puede apreciar en el circuito que $R_1$ y $r_e$ están en paralelo, pues ambas están conectadas entre el mismo nodo superior y tierra. Puedo reacomodar el circuito de tal forma en la que pueda visualizar mejor la salida y la entrada.
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+			
+			\draw (1.5,-4) to[R,l_=$\begin{array}{c} r_e  \end{array}$] (1.5,-7); %Re beta
+			
+			\draw (6.5,-4) to[R,l=$\begin{array}{c} R_2 \\ \SI{4.7}{\kilo\ohm}\end{array}$] (6.5,-7); % R2
+						
+			    \draw (-2.5,-4)to[R,l_=$\begin{array}{c} R_1 \\ \SI{2.2}{\kilo\ohm}\end{array}$] (-2.5,-7); % R1
+			    
+						
+			\draw (-1.5,-4)	to[short] (1.5,-4); % Cable izquierda
+			\draw (-4,-4) to[short] (-1.5,-4); % C1
+			
+			
+			\draw (4,-4) to[short] (10,-4);
+			\draw (4,-4) to[cI,invert,l=$\beta \; I_b$] (4,-7); % controlada
+			
+			\draw (-4,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			\draw (10,-4) to[R,l=$\begin{array}{c} R_L \\ \SI{5.6}{\kilo\ohm}\end{array}$] (10,-7); % RL
+			
+			
+			% Tierras
+			\draw (-2.5,-7) node[ground]{}; %R1
+			
+			\draw (4,-7) node[ground]{}; % beta ib
+			\draw (1.5,-7) node[ground]{}; %re bta
+
+			\draw (6.5,-7) node [ground] {}; %Rc
+			\draw (7.5,-7) node {$\textcolor{red}{Z_{o}}$} (7.5,-8);
+			
+			\draw (-4,-7) node {$\textcolor{red}{Z_{i}}$} (-4,-8);
+			\draw (-7,-7) node [ground] {}; % Vs
+			\draw (10,-7) node [ground] {}; %RL
+			
+			
+			% Flecha de Zi
+			\draw [-, red] (-5,-7.5) -- (-5,-7);
+    	    \draw [->, red] (-5,-7) -- (-4.5,-7);
+			
+			% Flecha de Zo 
+			\draw [-, red] (8.5,-7.5) -- (8.5,-7);
+    	    \draw [->, red] (8.5,-7) -- (8,-7);
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Muy bien, ahora que tengo el circuito equivalente acomodado de esta manera, se me es más sencillo ver y calcular las impedancias de entrada y salida.
+
+\vspace{0.2cm}
+\textbf{Calculando impedancia de entrada.}
+
+\vspace{0.2cm}
+Se puede apreciar que $Z_i$ = $R_1$ || $r_e $, por lo tanto:
+
+\begin{equation*}
+    Z_i = \left ( \frac{1}{2.2K} + \frac{1}{10.79}  \right )^{-1}
+\end{equation*}
+\begin{equation*}
+  \textcolor{red}{R/} \quad  \fbox{ Z_i = \SI{10.74}{\ohm}}
+\end{equation*}
+
+\textbf{Calculando impedancia de salida.}
+
+\vspace{0.2cm}
+Para la impedancia de salida como se asumió que el valor de $r_o$ es mucho mayor al de $R_2$ se tiene que la impedancia de salida es:
+
+\begin{equation*}
+    Z_o = R_2
+\end{equation*}
+\begin{equation*}
+    \textcolor{red}{R/} \quad \fbox{ Z_o = \SI{4.7}{K\ohm}}
+\end{equation*}
+
+\vspace{0.3cm}
+\textbf{Calculando la ganancia de tensión $A_{vs}$ del amplificador}
+
+\begin{equation*}
+    A_{Vs} = \frac{V_o}{V_s} = \frac{V_i}{V_s} \cdot \frac{V_o}{V_i}
+\end{equation*}
+\begin{equation*}
+    A_{Vs} =  \frac{V_i}{V_s} \cdot  A_{VL}
+\end{equation*}
+
+Para calcular el valor de  $A_{VL}$ utilizaré la expresión demostrada en clases, solo que esta vez sin el signo negativo, debido a que la corriente ahora si ingresa por la parte de arriba de $R_2$.
+
+\begin{equation*}
+    A_{VL} = \frac{R_2 || R_L}{r_e}
+\end{equation*}
+\begin{equation*}
+    A_{VL} = \left( \frac{1}{4.7K} + \frac{1}{5.6K}     \right)^{-1} \cdot \frac{1}{10.79}
+\end{equation*}
+\begin{equation*}
+   \fbox{ A_{VL} = 236.82 }
+\end{equation*}
+
+\newpage
+Muy bien, ahora para calcular el valor de la atenuación de entrada se plantea el siguiente circuito.
+
+
+\begin{figure}[H]
+	\begin{center}
+		\begin{circuitikz}[american,cute inductors,scale=0.9][americanvoltages]
+			
+						
+			    \draw (-1.5,-4)to[R,l_=$\begin{array}{c} Z_i \end{array}$] (-1.5,-7); % R1
+			    
+			\draw (-1.5,-4) to[R,l_=$R_s$,a^=\SI{100}{\ohm}] (-7,-4) % Rs
+						to[vsourcesin,l_=$V_s$] (-7,-7); % Vs
+			
+			% Tierras
+			\draw (-1.5,-7) node[ground]{}; %R1
+			
+            \draw (-0.5,-4) to [open,v=$V_{i}$] (-0.5,-7);
+
+			\draw (-7,-7) node [ground] {}; % Vs
+			
+		\end{circuitikz}
+	\end{center}
+\end{figure}
+
+Para calcular el valor de $V_i$ se utilizaré divisor de tensión.
+
+\begin{equation*}
+    V_i = \left ( \frac{Z_i}{R_s+Z_i}  \right) V_s
+\end{equation*}
+
+Pasando a dividir el valor de $V_s$ se obtiene la expresión para calcular la atenuación de entrada.
+
+
+\begin{equation*}
+    \frac{V_i }{V_s} = \left ( \frac{Z_i}{R_s+Z_i}  \right) 
+\end{equation*}
+
+Sustituyendo valores conocidos.
+
+\begin{equation*}
+    \frac{V_i }{V_s} = \left ( \frac{10.74}{100+ 10.74}  \right) 
+\end{equation*}
+\begin{equation*}
+    \frac{V_i }{V_s} = 0.097
+\end{equation*}
+
+Al ver este valor de atenuación obtenida me doy cuenta que esta sucediendo dos posibles casos; o la eficiencia de este amplificador es lamentable o yo me estaré equivocando en alguna parte del ejercicio, pues de toda la amplificación posible solo estaremos aprovechando el 9.7 \%.
+
+\vspace{0.3cm}
+Por lo tanto el valor de la la ganancia de tensión $A_{Vs}$ sería:
+
+\begin{equation*}
+  A_{Vs} =  0.097 \cdot 236.82
+\end{equation*}
+\begin{equation*}
+  \textcolor{red}{R/} \quad   \fbox{ A_{Vs} = 22.97 }
+\end{equation*}
+
+
+
+\end{document}
